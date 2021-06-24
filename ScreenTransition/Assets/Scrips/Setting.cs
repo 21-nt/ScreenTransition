@@ -5,24 +5,43 @@ using UnityEngine.UI;
 
 public class Setting : MonoBehaviour
 {
-    float originnum = 50f;
-    float num = 50f;
+    float normal;
+    float originnum;
+    float num;
+    string text;
     Slider Volume;
+    float inputnum;
+    float origininput;
     // Start is called before the first frame update
     void Start()
     {
         Volume = GameObject.Find("Slider").GetComponent<Slider>();
         Volume.maxValue = 100f;
-        Volume.value = 50f;
-        originnum = Volume.value;
+        originnum = num = inputnum = origininput = Volume.value = normal;
+        inputField().text = "50.0";
     }
 
     // Update is called once per frame
     void Update()
     {
         num = Volume.value;
-        if (originnum != num){
-            GameObject.Find("InputField").GetComponent<Text>().text = num.ToString();
+        text = inputField().text;
+        if(text == ""){
+            inputnum = 0;
+        }
+        else{
+            inputnum = float.Parse(text);
+        }
+        if (inputnum != origininput){
+            Volume.value = inputnum;
+            origininput = inputnum;
+        }
+        else if (originnum != num){
+            inputField().text = num.ToString();
+            originnum = num;
         }
     }
+    InputField inputField(){
+            return GameObject.Find("InputField").GetComponent<InputField>();
+        }
 }
