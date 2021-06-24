@@ -37,7 +37,12 @@ public class Setting : MonoBehaviour
             origininput = inputnum;
         }
         else if (originnum != num){
-            inputField().text = num.ToString();
+            if(num == 0){
+                inputField().text = "";
+            }
+            else{
+                inputField().text = num.ToString();
+            }
             originnum = num;
         }
     }
